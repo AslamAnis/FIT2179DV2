@@ -1,21 +1,11 @@
-"Total water consumption and area-average rainfall(a), Australia"
-,"Area-average rainfall (mm)","Total water consumption (GL)"
-"2014-15","416","16,050"
-"2015-16","453","14,801"
-"2016-17","580","15,634"
-"2017-18","433","16,640"
-"2018-19","347","14,181"
-"2019-20","347","12,148"
-"2020-21","513","14,891"
-"2021-22","509","15,751"
-"2022-23","611","15,258"
-"2023-24","535","17,223"
-
-" El Niño (2023-24)"
-" La Niña (2020-23)"
-" La Niña (2017-18)"
-" El Niño (2015-16)"
-
-" a. Sourced from the Bureau of Meteorology."
-
-" Source: Australian Bureau of Statistics, Water Account, Australia 2023-24 financial year"
+Year,Rainfall_mm,Consumption_GL
+2014-15,416,16050
+2015-16,453,14801
+2016-17,580,15634
+2017-18,433,16640
+2018-19,347,14181
+2019-20,347,12148
+2020-21,513,14891
+2021-22,509,15751
+2022-23,611,15258
+2023-24,535,17223
