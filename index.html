@@ -28,12 +28,21 @@
     </main>
 
     <script>
-        // Tell Vega-Embed to look at your human-readable external JSON spec file 
-        // and inject it into the HTML div with id="vis1"
-        vegaEmbed('#vis1', 'jsons/chart_rising_costs.json').then(function(result) {
-            // Access the Vega view instance if needed
-        }).catch(console.error);
-    </script>
+  // Chart 1: Consumption vs Rainfall
+  vegaEmbed('#consumptionChart', 'jsons/chart_rain_vs_consumption.json', {actions: false}).catch(console.error);
+
+  // Chart 2: Sector Shares
+  vegaEmbed('#sectorChart', 'jsons/chart_sector_shares.json', {actions: false}).catch(console.error);
+
+  // Chart 3: State Heatmap
+  vegaEmbed('#heatmapChart', 'jsons/chart_state_heatmap.json', {actions: false}).catch(console.error);
+
+  // Chart 4: Efficiency Trajectory
+  vegaEmbed('#trajectoryChart', 'jsons/chart_efficiency_trajectory.json', {actions: false}).catch(console.error);
+
+  // Chart 5: Water Prices
+  vegaEmbed('#pricesChart', 'jsons/chart_water_prices.json', {actions: false}).catch(console.error);
+</script>
 
 </body>
 </html>
