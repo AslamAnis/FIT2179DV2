@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Australia's Water Imperative</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Down the Drain: Mapping Australia's Water Security & The Rainwater Solution</h1>
+        <p class="metadata">Author: Mohamed Aslam | Date: May 2026</p>
+    </header>
+
+    <main class="container">
+        <section class="narrative-section">
+            <h2>The Cost of Volatility</h2>
+            <p>Introductory narrative text goes here to guide the viewer...</p>
+            
+            <div id="vis1" class="chart-container"></div>
+        </section>
+    </main>
+
+    <script>
+        // Tell Vega-Embed to look at your human-readable external JSON spec file 
+        // and inject it into the HTML div with id="vis1"
+        vegaEmbed('#vis1', 'jsons/chart_rising_costs.json').then(function(result) {
+            // Access the Vega view instance if needed
+        }).catch(console.error);
+    </script>
+
+</body>
+</html>
