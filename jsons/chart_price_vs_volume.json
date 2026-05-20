@@ -1,0 +1,36 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "The Cost Elasticity Grid",
+    "subtitle": "State-level water use (kL) plotted against average household utility prices ($/kL)",
+    "fontSize": 16, "fontWeight": "bold", "anchor": "start", "color": "#0f172a"
+  },
+  "width": "container",
+  "height": 350,
+  "data": {
+    "url": "data/household_use_by_state.csv"
+  },
+  "transform": [
+    {"filter": "datum.Year == '2023-24'"},
+    {
+      "lookup": "Year",
+      "from": {
+        "data": {"url": "data/water_prices.csv"},
+        "key": "Year",
+        "fields": ["Sector", "Price_per_kL"]
+      }
+    },
+    {"filter": "datum.Sector == 'Household'"}
+  ],
+  "mark": {"type": "point", "size": 150, "filled": true, "color": "#ef4444"},
+  "encoding": {
+    "x": {"field": "Price_per_kL", "type": "quantitative", "axis": {"title": "Average Price ($/kL)", "format": "$.2f"}},
+    "y": {"field": "Water_Use", "type": "quantitative", "axis": {"title": "Annual Household Use (kL)"}},
+    "tooltip": [
+      {"field": "State", "type": "nominal"},
+      {"field": "Price_per_kL", "type": "quantitative", "title": "Price ($/kL)", "format": "$.2f"},
+      {"field": "Water_Use", "type": "quantitative", "title": "Use (kL)", "format": ".1f"}
+    ]
+  },
+  "config": {"view": {"stroke": "transparent"}, "font": "Inter, sans-serif"}
+}
