@@ -1,26 +1,26 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
+  "description": "Dual-axis layered chart comparing Australia's area-average rainfall (bars, left axis) against total national water consumption (line + points, right axis) from 2014-15 to 2023-24. Hover over any year to reveal a crosshair and detailed tooltip.",
+
   "title": {
-    "text": "Australian Water Consumption vs. Rainfall",
-    "subtitle": [
-      "Area-average rainfall (bars) and total national water consumption (line), 2014–2024",
-      "Source: Australian Bureau of Statistics, Water Account Australia"
-    ],
-    "fontSize": 18,
+    "text": "Does More Rain Mean Less Water Use?",
+    "subtitle": "Area-average rainfall vs. total national water consumption · Australia, 2014–2024",
+    "fontSize": 17,
     "fontWeight": "bold",
+    "font": "Inter, system-ui, -apple-system, sans-serif",
+    "subtitleFont": "Inter, system-ui, -apple-system, sans-serif",
     "subtitleFontSize": 12,
-    "subtitleFontStyle": "italic",
-    "subtitleColor": "#7a8694",
+    "subtitleFontStyle": "normal",
+    "subtitleColor": "#64748b",
+    "subtitlePadding": 6,
     "anchor": "start",
-    "color": "#1b2735",
-    "offset": 12
+    "color": "#0f172a",
+    "offset": 16
   },
 
-  "description": "Dual-axis chart comparing Australia's annual area-average rainfall (mm) as bars against total national water consumption (GL) as a line, from 2014–15 to 2023–24. NOTE: Ensure your CSV uses the column headers 'Year', 'Rainfall_mm', and 'Consumption_GL', with numeric values free of comma separators.",
-
   "width": "container",
-  "height": 400,
+  "height": 380,
   "autosize": { "type": "fit", "contains": "padding" },
 
   "data": {
@@ -28,74 +28,79 @@
     "format": { "type": "csv" }
   },
 
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "ordinal",
+      "sort": null,
+      "axis": {
+        "title": "Financial Year",
+        "titleFontSize": 11,
+        "titleFontWeight": "normal",
+        "titleColor": "#475569",
+        "titlePadding": 12,
+        "labelFontSize": 11,
+        "labelColor": "#475569",
+        "labelAngle": -30,
+        "labelPadding": 6,
+        "grid": false,
+        "domainColor": "#e2e8f0",
+        "tickColor": "#e2e8f0",
+        "tickSize": 5
+      }
+    }
+  },
+
   "layer": [
 
     {
-      "description": "Rainfall bars (left y-axis)",
+      "description": "LAYER 1 — Rainfall bars on the left y-axis. Rendered first (bottom z-order) so the consumption line reads above them.",
       "mark": {
         "type": "bar",
         "opacity": 0.55,
-        "cornerRadiusTopLeft": 4,
-        "cornerRadiusTopRight": 4,
-        "color": "#4ab3d8"
+        "cornerRadiusTopLeft": 3,
+        "cornerRadiusTopRight": 3,
+        "color": "#7db9e8"
       },
       "encoding": {
-        "x": {
-          "field": "Year",
-          "type": "ordinal",
-          "sort": null,
-          "axis": {
-            "title": "Financial Year",
-            "labelAngle": -30,
-            "labelFontSize": 11,
-            "titleFontSize": 12,
-            "titleFontWeight": "bold",
-            "titlePadding": 10,
-            "grid": false,
-            "domainColor": "#cdd3da",
-            "tickColor": "#cdd3da"
-          }
-        },
         "y": {
           "field": "Rainfall_mm",
           "type": "quantitative",
           "scale": { "zero": true, "nice": true },
           "axis": {
             "title": "Area-Average Rainfall (mm)",
-            "titleColor": "#2a7fa8",
-            "labelColor": "#2a7fa8",
-            "titleFontSize": 12,
-            "titleFontWeight": "bold",
-            "gridColor": "#eaeef2",
+            "titleColor": "#4a86b8",
+            "titleFontSize": 11,
+            "titleFontWeight": "normal",
+            "titlePadding": 10,
+            "labelColor": "#4a86b8",
+            "labelFontSize": 11,
+            "gridColor": "#e2e8f0",
             "gridDash": [3, 3],
-            "domainColor": "#cdd3da",
-            "tickColor": "#cdd3da",
-            "labelFontSize": 11
+            "gridOpacity": 0.8,
+            "domainColor": "#e2e8f0",
+            "tickColor": "#e2e8f0",
+            "tickSize": 5
           }
         },
         "tooltip": [
-          { "field": "Year",          "type": "ordinal",      "title": "Year" },
-          { "field": "Rainfall_mm",   "type": "quantitative", "title": "Rainfall (mm)",          "format": ",.0f" },
-          { "field": "Consumption_GL","type": "quantitative", "title": "Water Consumption (GL)", "format": ",.0f" }
+          { "field": "Year",           "type": "ordinal",      "title": "Year"                      },
+          { "field": "Rainfall_mm",    "type": "quantitative", "title": "Rainfall (mm)",    "format": ",.0f" },
+          { "field": "Consumption_GL", "type": "quantitative", "title": "Consumption (GL)", "format": ",.0f" }
         ]
       }
     },
 
     {
-      "description": "Consumption area fill (right y-axis) — subtle shading beneath the line",
+      "description": "LAYER 2 — Subtle area fill beneath the consumption line. Adds visual weight without dominating the bars.",
       "mark": {
         "type": "area",
-        "opacity": 0.10,
-        "color": "#e05c2a",
+        "color": "#e8651a",
+        "opacity": 0.07,
         "interpolate": "monotone",
         "line": false
       },
       "encoding": {
-        "x": {
-          "field": "Year",
-          "type": "ordinal",
-          "sort": null
-        },
         "y": {
           "field": "Consumption_GL",
           "type": "quantitative",
@@ -105,69 +110,102 @@
     },
 
     {
-      "description": "Consumption line (right y-axis)",
+      "description": "LAYER 3 — Consumption trend line on the right y-axis. Monotone interpolation prevents artificial peaks between data points.",
       "mark": {
         "type": "line",
-        "color": "#e05c2a",
-        "strokeWidth": 2.8,
+        "color": "#e8651a",
+        "strokeWidth": 2.5,
         "interpolate": "monotone",
-        "point": false
+        "strokeCap": "round",
+        "strokeJoin": "round"
       },
       "encoding": {
-        "x": {
-          "field": "Year",
-          "type": "ordinal",
-          "sort": null
-        },
         "y": {
           "field": "Consumption_GL",
           "type": "quantitative",
           "scale": { "zero": false, "nice": true },
           "axis": {
             "title": "Total Water Consumption (GL)",
-            "titleColor": "#c0461a",
-            "labelColor": "#c0461a",
-            "titleFontSize": 12,
-            "titleFontWeight": "bold",
+            "orient": "right",
+            "titleColor": "#c4541a",
+            "titleFontSize": 11,
+            "titleFontWeight": "normal",
+            "titlePadding": 10,
+            "labelColor": "#c4541a",
+            "labelFontSize": 11,
             "grid": false,
-            "domainColor": "#cdd3da",
-            "tickColor": "#cdd3da",
-            "labelFontSize": 11
+            "domainColor": "#e2e8f0",
+            "tickColor": "#e2e8f0",
+            "tickSize": 5
           }
         },
         "tooltip": [
-          { "field": "Year",          "type": "ordinal",      "title": "Year" },
-          { "field": "Rainfall_mm",   "type": "quantitative", "title": "Rainfall (mm)",          "format": ",.0f" },
-          { "field": "Consumption_GL","type": "quantitative", "title": "Water Consumption (GL)", "format": ",.0f" }
+          { "field": "Year",           "type": "ordinal",      "title": "Year"                      },
+          { "field": "Rainfall_mm",    "type": "quantitative", "title": "Rainfall (mm)",    "format": ",.0f" },
+          { "field": "Consumption_GL", "type": "quantitative", "title": "Consumption (GL)", "format": ",.0f" }
         ]
       }
     },
 
     {
-      "description": "Consumption data points — interactive hover targets",
+      "description": "LAYER 4 — Hover detection rule. Defines the 'hover' param used by all conditional encodings. nearest:true snaps the selection to the closest Year column on mouseover.",
+      "params": [
+        {
+          "name": "hover",
+          "select": {
+            "type": "point",
+            "fields": ["Year"],
+            "nearest": true,
+            "on": "mouseover",
+            "clear": "mouseout"
+          }
+        }
+      ],
       "mark": {
-        "type": "point",
-        "color": "#e05c2a",
-        "filled": true,
-        "size": 72,
-        "strokeWidth": 1.5,
-        "stroke": "#ffffff",
-        "opacity": 1
+        "type": "rule",
+        "color": "#94a3b8",
+        "strokeWidth": 1,
+        "strokeDash": [4, 4]
       },
       "encoding": {
-        "x": {
-          "field": "Year",
-          "type": "ordinal",
-          "sort": null
+        "opacity": {
+          "condition": { "param": "hover", "empty": false, "value": 0.75 },
+          "value": 0
         },
+        "tooltip": [
+          { "field": "Year",           "type": "ordinal",      "title": "Year"                      },
+          { "field": "Rainfall_mm",    "type": "quantitative", "title": "Rainfall (mm)",    "format": ",.0f" },
+          { "field": "Consumption_GL", "type": "quantitative", "title": "Consumption (GL)", "format": ",.0f" }
+        ]
+      }
+    },
+
+    {
+      "description": "LAYER 5 — Consumption data points. Rendered on top of the line. Size and opacity respond to the 'hover' param: points enlarge and fully opacify when their year is selected.",
+      "mark": {
+        "type": "point",
+        "color": "#e8651a",
+        "filled": true,
+        "stroke": "#ffffff",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
         "y": {
           "field": "Consumption_GL",
           "type": "quantitative"
         },
+        "size": {
+          "condition": { "param": "hover", "empty": false, "value": 140 },
+          "value": 45
+        },
+        "opacity": {
+          "condition": { "param": "hover", "empty": false, "value": 1 },
+          "value": 0.72
+        },
         "tooltip": [
-          { "field": "Year",          "type": "ordinal",      "title": "Year" },
-          { "field": "Rainfall_mm",   "type": "quantitative", "title": "Rainfall (mm)",          "format": ",.0f" },
-          { "field": "Consumption_GL","type": "quantitative", "title": "Water Consumption (GL)", "format": ",.0f" }
+          { "field": "Year",           "type": "ordinal",      "title": "Year"                      },
+          { "field": "Rainfall_mm",    "type": "quantitative", "title": "Rainfall (mm)",    "format": ",.0f" },
+          { "field": "Consumption_GL", "type": "quantitative", "title": "Consumption (GL)", "format": ",.0f" }
         ]
       }
     }
@@ -180,20 +218,21 @@
 
   "config": {
     "background": "#ffffff",
-    "font": "Georgia, 'Times New Roman', serif",
+    "font": "Inter, system-ui, -apple-system, sans-serif",
     "view": {
-      "stroke": "transparent"
+      "stroke": "transparent",
+      "continuousWidth": 500,
+      "continuousHeight": 380
     },
     "axis": {
-      "labelFont": "Georgia, 'Times New Roman', serif",
-      "titleFont": "Georgia, 'Times New Roman', serif"
+      "labelFont":  "Inter, system-ui, -apple-system, sans-serif",
+      "titleFont":  "Inter, system-ui, -apple-system, sans-serif",
+      "gridColor":  "#e2e8f0",
+      "gridDash":   [3, 3]
     },
     "title": {
-      "font": "Georgia, 'Times New Roman', serif",
-      "subtitleFont": "Georgia, 'Times New Roman', serif"
-    },
-    "legend": {
-      "disable": true
+      "font":         "Inter, system-ui, -apple-system, sans-serif",
+      "subtitleFont": "Inter, system-ui, -apple-system, sans-serif"
     },
     "tooltip": {
       "theme": "light"
