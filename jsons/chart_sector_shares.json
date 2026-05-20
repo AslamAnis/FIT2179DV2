@@ -1,0 +1,78 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Shifting Demands: Proportional Water Consumption by Sector",
+    "subtitle": [
+      "Percentage share of total national distributed water use (GL), 2014–2024",
+      "Source: Australian Bureau of Statistics, Water Account Australia"
+    ],
+    "fontSize": 16,
+    "fontWeight": "bold",
+    "anchor": "start",
+    "color": "#111827",
+    "subtitleColor": "#4b5563",
+    "offset": 15
+  },
+  "width": "container",
+  "height": 400,
+  "data": {
+    "url": "data/distributed_water_use.csv",
+    "format": { "type": "csv" }
+  },
+  "transform": [
+    {
+      "fold": ["Agriculture", "Households", "Manufacturing", "Mining", "Other_Industries"],
+      "as": ["Sector", "Water_Use"]
+    }
+  ],
+  "mark": {
+    "type": "area",
+    "line": {"strokeWidth": 0.5, "color": "#ffffff"},
+    "opacity": 0.9
+  },
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "ordinal",
+      "axis": {
+        "title": "Financial Year",
+        "labelAngle": 0,
+        "grid": false,
+        "domainColor": "#d1d5db"
+      }
+    },
+    "y": {
+      "aggregate": "sum",
+      "field": "Water_Use",
+      "type": "quantitative",
+      "stack": "normalize",
+      "axis": {
+        "title": "Proportional Share of Water Use (%)",
+        "format": "%",
+        "gridColor": "#f3f4f6"
+      }
+    },
+    "color": {
+      "field": "Sector",
+      "type": "nominal",
+      "scale": {
+        "domain": ["Agriculture", "Households", "Manufacturing", "Mining", "Other_Industries"],
+        "range": ["#0284c7", "#f97316", "#10b981", "#8b5cf6", "#6b7280"]
+      },
+      "legend": {
+        "title": "Economic Sector",
+        "orient": "right",
+        "offset": 10
+      }
+    },
+    "tooltip": [
+      { "field": "Year", "type": "ordinal", "title": "Year" },
+      { "field": "Sector", "type": "nominal", "title": "Sector" },
+      { "field": "Water_Use", "type": "quantitative", "title": "Volume (GL)", "format": "," }
+    ]
+  },
+  "config": {
+    "view": { "stroke": "transparent" },
+    "font": "Inter, system-ui, -apple-system, sans-serif"
+  }
+}
