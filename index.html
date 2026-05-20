@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Australia's Water Imperative</title>
-    
     <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,65 +17,71 @@
     </header>
 
     <main class="dashboard-container">
-        
         <section class="narrative-section">
             <h2>1. The Environmental Disparity</h2>
-            <p class="narrative-text">
-                Australia's macro climate conditions are profoundly volatile. While area-average 
-                precipitation fluctuates wildly year-over-year, our societal dependency on structural 
-                water supplies remains rigid, creating severe vulnerability during prolonged dry spells.
-            </p>
             <div id="consumptionChart" class="chart-frame"></div>
         </section>
 
         <section class="narrative-section">
-            <h2>2. Sector Allocation and Societal Footprints</h2>
-            <p class="narrative-text">
-                When examining national allocations, agricultural operations scale dynamically depending 
-                on weather variations. In contrast, residential urban networks exhibit a structurally rigid footprint.
-            </p>
+            <h2>2. Sector Allocation Profiles</h2>
             <div id="sectorChart" class="chart-frame"></div>
         </section>
 
         <section class="narrative-section">
             <h2>3. Regional Domestic Intensities</h2>
-            <p class="narrative-text">
-                Residential consumption profiles differ significantly across geographic regions. Climatic variation and 
-                urban sprawl drive massive household demands in environments like the Northern Territory and Western Australia.
-            </p>
             <div id="heatmapChart" class="chart-frame"></div>
         </section>
 
         <section class="narrative-section">
-            <h2>4. Structural Trajectories: Domestic vs. Commercial Footprints</h2>
-            <p class="narrative-text">
-                Evaluating macro efficiency requirements requires tracking the path of commercial production 
-                intensities against domestic baselines. Over the last decade, industrial operations shifted 
-                towards higher conservation standards per dollar generated.
-            </p>
+            <h2>4. Structural Efficiency Trajectories</h2>
             <div id="trajectoryChart" class="chart-frame"></div>
         </section>
 
         <section class="narrative-section">
             <h2>5. The Financial Inequity</h2>
-            <p class="narrative-text">
-                The economic burden of centralized water networks falls disproportionately on domestic users. 
-                While commercial operations benefit from highly subsidized wholesale rates, regular Australian households 
-                face severe price scaling.
-            </p>
             <div id="pricesChart" class="chart-frame"></div>
         </section>
 
+        <section class="narrative-section">
+            <h2>6. Geographic Stress Distribution</h2>
+            <div id="mapChart" class="chart-frame"></div>
+        </section>
+
+        <section class="narrative-section">
+            <h2>7. Cost Elasticity Correlation</h2>
+            <div id="elasticityChart" class="chart-frame"></div>
+        </section>
+
+        <section class="narrative-section">
+            <h2>8. Supply vs. Price Imbalance Index</h2>
+            <div id="imbalanceChart" class="chart-frame"></div>
+        </section>
+
+        <section class="narrative-section">
+            <h2>9. Residential Harvest Potential</h2>
+            <div id="potentialChart" class="chart-frame"></div>
+        </section>
+
+        <section class="narrative-section">
+            <h2>10. Financial Savings Runway</h2>
+            <div id="paybackChart" class="chart-frame"></div>
+        </section>
     </main>
 
     <script>
-        // Links your HTML boxes to your external human-readable JSON files
+        // Core Visualisations
         vegaEmbed('#consumptionChart', 'jsons/chart_rain_vs_consumption.json', {actions: false}).catch(console.error);
         vegaEmbed('#sectorChart', 'jsons/chart_sector_shares.json', {actions: false}).catch(console.error);
         vegaEmbed('#heatmapChart', 'jsons/chart_state_heatmap.json', {actions: false}).catch(console.error);
         vegaEmbed('#trajectoryChart', 'jsons/chart_efficiency_trajectory.json', {actions: false}).catch(console.error);
         vegaEmbed('#pricesChart', 'jsons/chart_water_prices.json', {actions: false}).catch(console.error);
-    </script>
 
+        // Expanded Cross-Dataset & Solution Visualisations
+        vegaEmbed('#mapChart', 'jsons/map_water_stress.json', {actions: false}).catch(console.error);
+        vegaEmbed('#elasticityChart', 'jsons/chart_price_vs_volume.json', {actions: false}).catch(console.error);
+        vegaEmbed('#imbalanceChart', 'jsons/chart_supply_imbalance.json', {actions: false}).catch(console.error);
+        vegaEmbed('#potentialChart', 'jsons/chart_catchment_potential.json', {actions: false}).catch(console.error);
+        vegaEmbed('#paybackChart', 'jsons/chart_financial_payback.json', {actions: false}).catch(console.error);
+    </script>
 </body>
 </html>
