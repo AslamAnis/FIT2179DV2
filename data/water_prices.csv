@@ -1,14 +1,21 @@
-"Industry and household water prices, Australia"
-,"Industry ($/kL)","Household ($/kL)"
-"2014-15","0.22","3.49"
-"2015-16","0.29","3.46"
-"2016-17","0.26","3.40"
-"2017-18","0.27","3.38"
-"2018-19","0.37","3.44"
-"2019-20","0.41","3.52"
-"2020-21","0.31","3.41"
-"2021-22","0.31","3.43"
-"2022-23","0.36","3.55"
-"2023-24","0.35","3.71"
-
-" Source: Australian Bureau of Statistics, Water Account, Australia 2023-24 financial year"
+Year,Sector,Price_per_kL
+2014-15,Industry,0.22
+2015-16,Industry,0.29
+2016-17,Industry,0.26
+2017-18,Industry,0.27
+2018-19,Industry,0.37
+2019-20,Industry,0.41
+2020-21,Industry,0.31
+2021-22,Industry,0.31
+2022-23,Industry,0.36
+2023-24,Industry,0.35
+2014-15,Household,3.49
+2015-16,Household,3.46
+2016-17,Household,3.40
+2017-18,Household,3.38
+2018-19,Household,3.44
+2019-20,Household,3.52
+2020-21,Household,3.41
+2021-22,Household,3.43
+2022-23,Household,3.55
+2023-24,Household,3.71
