@@ -12,41 +12,72 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="consumptionChart" class="chart-frame"></div>
-<div id="sectorChart" class="chart-frame"></div>
-<div id="heatmapChart" class="chart-frame"></div>
-<div id="trajectoryChart" class="chart-frame"></div>
-<div id="pricesChart" class="chart-frame"></div>
-    <header>
+
+    <header class="main-header">
         <h1>Down the Drain: Mapping Australia's Water Security & The Rainwater Solution</h1>
         <p class="metadata">Author: Mohamed Aslam | Date: May 2026</p>
     </header>
 
-    <main class="container">
+    <main class="dashboard-container">
+        
         <section class="narrative-section">
-            <h2>The Cost of Volatility</h2>
-            <p>Introductory narrative text goes here to guide the viewer...</p>
-            
-            <div id="vis1" class="chart-container"></div>
+            <h2>1. The Environmental Disparity</h2>
+            <p class="narrative-text">
+                Australia's macro climate conditions are profoundly volatile. While area-average 
+                precipitation fluctuates wildly year-over-year, our societal dependency on structural 
+                water supplies remains rigid, creating severe vulnerability during prolonged dry spells.
+            </p>
+            <div id="consumptionChart" class="chart-frame"></div>
         </section>
+
+        <section class="narrative-section">
+            <h2>2. Sector Allocation and Societal Footprints</h2>
+            <p class="narrative-text">
+                When examining national allocations, agricultural operations scale dynamically depending 
+                on weather variations. In contrast, residential urban networks exhibit a structurally rigid footprint.
+            </p>
+            <div id="sectorChart" class="chart-frame"></div>
+        </section>
+
+        <section class="narrative-section">
+            <h2>3. Regional Domestic Intensities</h2>
+            <p class="narrative-text">
+                Residential consumption profiles differ significantly across geographic regions. Climatic variation and 
+                urban sprawl drive massive household demands in environments like the Northern Territory and Western Australia.
+            </p>
+            <div id="heatmapChart" class="chart-frame"></div>
+        </section>
+
+        <section class="narrative-section">
+            <h2>4. Structural Trajectories: Domestic vs. Commercial Footprints</h2>
+            <p class="narrative-text">
+                Evaluating macro efficiency requirements requires tracking the path of commercial production 
+                intensities against domestic baselines. Over the last decade, industrial operations shifted 
+                towards higher conservation standards per dollar generated.
+            </p>
+            <div id="trajectoryChart" class="chart-frame"></div>
+        </section>
+
+        <section class="narrative-section">
+            <h2>5. The Financial Inequity</h2>
+            <p class="narrative-text">
+                The economic burden of centralized water networks falls disproportionately on domestic users. 
+                While commercial operations benefit from highly subsidized wholesale rates, regular Australian households 
+                face severe price scaling.
+            </p>
+            <div id="pricesChart" class="chart-frame"></div>
+        </section>
+
     </main>
 
     <script>
-  // Chart 1: Consumption vs Rainfall
-  vegaEmbed('#consumptionChart', 'jsons/chart_rain_vs_consumption.json', {actions: false}).catch(console.error);
-
-  // Chart 2: Sector Shares
-  vegaEmbed('#sectorChart', 'jsons/chart_sector_shares.json', {actions: false}).catch(console.error);
-
-  // Chart 3: State Heatmap
-  vegaEmbed('#heatmapChart', 'jsons/chart_state_heatmap.json', {actions: false}).catch(console.error);
-
-  // Chart 4: Efficiency Trajectory
-  vegaEmbed('#trajectoryChart', 'jsons/chart_efficiency_trajectory.json', {actions: false}).catch(console.error);
-
-  // Chart 5: Water Prices
-  vegaEmbed('#pricesChart', 'jsons/chart_water_prices.json', {actions: false}).catch(console.error);
-</script>
+        // Links your HTML boxes to your external human-readable JSON files
+        vegaEmbed('#consumptionChart', 'jsons/chart_rain_vs_consumption.json', {actions: false}).catch(console.error);
+        vegaEmbed('#sectorChart', 'jsons/chart_sector_shares.json', {actions: false}).catch(console.error);
+        vegaEmbed('#heatmapChart', 'jsons/chart_state_heatmap.json', {actions: false}).catch(console.error);
+        vegaEmbed('#trajectoryChart', 'jsons/chart_efficiency_trajectory.json', {actions: false}).catch(console.error);
+        vegaEmbed('#pricesChart', 'jsons/chart_water_prices.json', {actions: false}).catch(console.error);
+    </script>
 
 </body>
 </html>
