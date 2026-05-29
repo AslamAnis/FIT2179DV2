@@ -1,0 +1,156 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "description": "Two indexed time series rebased to 100 in 2014-15, showing how the supply of water (annual area-average rainfall) and the price of water (household tariff per kL) have diverged since 2014. Because both series start at the same value, the y-axis directly represents percentage change from the baseline year. The widening gap between the lines is the 'imbalance' referred to in the title.",
+
+  "title": {
+    "text": "Rain Falls Then Rises. Prices Only Rise.",
+    "subtitle": "Indexed change in rainfall and household water price (2014-15 = 100)",
+    "fontSize": 17,
+    "fontWeight": "bold",
+    "font": "Inter, system-ui, -apple-system, sans-serif",
+    "subtitleFont": "Inter, system-ui, -apple-system, sans-serif",
+    "subtitleFontSize": 12,
+    "subtitleFontStyle": "normal",
+    "subtitleColor": "#64748b",
+    "subtitlePadding": 6,
+    "anchor": "start",
+    "color": "#0f172a",
+    "offset": 16
+  },
+
+  "width": "container",
+  "height": 360,
+  "autosize": { "type": "fit", "contains": "padding" },
+
+  "data": {
+    "url": "data/total_consumption_rainfall.csv",
+    "format": { "type": "csv" }
+  },
+
+  "transform": [
+    {
+      "lookup": "Year",
+      "from": {
+        "data": { "url": "data/water_prices_wide.csv", "format": { "type": "csv" } },
+        "key": "Year",
+        "fields": ["Household_Price"]
+      }
+    },
+    {
+      "window": [
+        { "op": "first_value", "field": "Rainfall_mm",     "as": "Rain_Base"  },
+        { "op": "first_value", "field": "Household_Price", "as": "Price_Base" }
+      ],
+      "sort": [{ "field": "Year", "order": "ascending" }],
+      "frame": [null, null]
+    },
+    { "calculate": "datum.Rainfall_mm     / datum.Rain_Base  * 100", "as": "Rainfall_Index" },
+    { "calculate": "datum.Household_Price / datum.Price_Base * 100", "as": "Price_Index"    },
+    {
+      "fold": ["Rainfall_Index", "Price_Index"],
+      "as":   ["Series",         "Value"]
+    },
+    { "calculate": "datum.Series == 'Rainfall_Index' ? 'Rainfall (supply)' : 'Household price'", "as": "Series_Label" }
+  ],
+
+  "layer": [
+    {
+      "description": "Baseline at 100 to anchor the eye.",
+      "mark": { "type": "rule", "color": "#cbd5e1", "strokeDash": [2, 4], "strokeWidth": 1 },
+      "encoding": {
+        "y": { "datum": 100, "type": "quantitative" }
+      }
+    },
+    {
+      "description": "The two indexed lines, coloured by series.",
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2.5,
+        "interpolate": "monotone",
+        "strokeCap": "round",
+        "point": { "filled": true, "size": 55, "stroke": "#ffffff", "strokeWidth": 1.2 }
+      },
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "ordinal",
+          "sort": null,
+          "axis": {
+            "title": "Financial Year",
+            "titleFontSize": 11,
+            "titleColor": "#475569",
+            "titlePadding": 12,
+            "labelFontSize": 11,
+            "labelColor": "#475569",
+            "labelAngle": -30,
+            "grid": false,
+            "domainColor": "#e2e8f0",
+            "tickColor": "#e2e8f0"
+          }
+        },
+        "y": {
+          "field": "Value",
+          "type": "quantitative",
+          "scale": { "zero": false, "nice": true, "padding": 12 },
+          "axis": {
+            "title": "Index (2014-15 = 100)",
+            "titleFontSize": 11,
+            "titleColor": "#475569",
+            "labelFontSize": 11,
+            "labelColor": "#475569",
+            "gridColor": "#e2e8f0",
+            "gridDash": [3, 3]
+          }
+        },
+        "color": {
+          "field": "Series_Label",
+          "type": "nominal",
+          "scale": { "domain": ["Rainfall (supply)", "Household price"], "range": ["#0284c7", "#e8651a"] },
+          "legend": {
+            "title": null,
+            "orient": "top",
+            "labelFontSize": 11,
+            "symbolType": "stroke",
+            "symbolStrokeWidth": 3
+          }
+        },
+        "tooltip": [
+          { "field": "Year",         "type": "ordinal",      "title": "Year"                                       },
+          { "field": "Series_Label", "type": "nominal",      "title": "Series"                                     },
+          { "field": "Value",        "type": "quantitative", "title": "Index", "format": ".1f"                     }
+        ]
+      }
+    },
+    {
+      "description": "Inline annotation - widening gap at the latest data point.",
+      "data": {
+        "values": [
+          { "Year": "2023-24", "y": 106, "label": "Prices: +6.3%", "color": "#c4541a" },
+          { "Year": "2023-24", "y": 128, "label": "Rainfall: +28.6%", "color": "#0369a1" }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -10,
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "font": "Inter, system-ui, sans-serif"
+      },
+      "encoding": {
+        "x":     { "field": "Year",  "type": "ordinal"      },
+        "y":     { "field": "y",     "type": "quantitative" },
+        "text":  { "field": "label", "type": "nominal"      },
+        "color": { "field": "color", "type": "nominal", "scale": null }
+      }
+    }
+  ],
+
+  "config": {
+    "background": "#ffffff",
+    "font": "Inter, system-ui, -apple-system, sans-serif",
+    "view": { "stroke": "transparent" },
+    "tooltip": { "theme": "light" }
+  }
+}

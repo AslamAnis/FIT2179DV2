@@ -1,0 +1,105 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Interactive matrix heatmap tracking household water use trends across different Australian jurisdictions.",
+  "title": {
+    "text": "The Regional Divide",
+    "subtitle": "Average annual water use per household (kL) by State and Territory · 2019–2024",
+    "fontSize": 17,
+    "fontWeight": "bold",
+    "font": "Inter, system-ui, -apple-system, sans-serif",
+    "subtitleFont": "Inter, system-ui, -apple-system, sans-serif",
+    "subtitleFontSize": 12,
+    "subtitleFontStyle": "normal",
+    "subtitleColor": "#64748b",
+    "subtitlePadding": 6,
+    "anchor": "start",
+    "color": "#0f172a",
+    "offset": 16
+  },
+  "width": "container",
+  "height": 350,
+  "autosize": { "type": "fit", "contains": "padding" },
+  "data": {
+    "url": "data/household_use_by_state.csv",
+    "format": { "type": "csv" }
+  },
+  "params": [
+    {
+      "name": "hover",
+      "select": {
+        "type": "point",
+        "on": "mouseover",
+        "clear": "mouseout"
+      }
+    }
+  ],
+  "mark": {
+    "type": "rect",
+    "strokeWidth": 1.5
+  },
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "ordinal",
+      "axis": {
+        "title": "Financial Year",
+        "titleFontSize": 11,
+        "titleColor": "#475569",
+        "titlePadding": 12,
+        "labelFontSize": 11,
+        "labelColor": "#475569",
+        "labelAngle": 0,
+        "grid": false,
+        "domainColor": "#e2e8f0",
+        "tickColor": "#e2e8f0"
+      }
+    },
+    "y": {
+      "field": "State",
+      "type": "nominal",
+      "sort": { "op": "mean", "field": "Water_Use", "order": "descending" },
+      "axis": {
+        "title": "State / Territory",
+        "titleFontSize": 11,
+        "titleColor": "#475569",
+        "titlePadding": 10,
+        "labelFontSize": 11,
+        "labelColor": "#475569",
+        "grid": false,
+        "domainColor": "#e2e8f0"
+      }
+    },
+    "color": {
+      "field": "Water_Use",
+      "type": "quantitative",
+      "scale": {
+        "scheme": "blues"
+      },
+      "legend": {
+        "title": "Water Use (kL)",
+        "orient": "right",
+        "titleFont": "Inter, system-ui, sans-serif",
+        "labelFont": "Inter, system-ui, sans-serif"
+      }
+    },
+    "stroke": {
+      "condition": {
+        "param": "hover",
+        "empty": false,
+        "value": "#0f172a"
+      },
+      "value": "#ffffff"
+    },
+    "tooltip": [
+      { "field": "State", "type": "nominal", "title": "State" },
+      { "field": "Year", "type": "ordinal", "title": "Year" },
+      { "field": "Water_Use", "type": "quantitative", "title": "Avg Household Use (kL)", "format": ".1f" }
+    ]
+  },
+  "config": {
+    "background": "#ffffff",
+    "font": "Inter, system-ui, -apple-system, sans-serif",
+    "view": { "stroke": "transparent" },
+    "tooltip": { "theme": "light" }
+  }
+}

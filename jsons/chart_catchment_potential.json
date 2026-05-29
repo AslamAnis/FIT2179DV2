@@ -1,0 +1,130 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "description": "Line chart of the theoretical annual yield from a domestic rainwater catchment system. The yield is calculated from the equation: rainfall (mm) x roof footprint (200 m^2) x runoff coefficient (0.85). The runoff coefficient accounts for evaporation, first-flush diversion and gutter losses. Tooltips disclose both the input rainfall and the calculated yield.",
+
+  "title": {
+    "text": "How Many Litres Land on the Roof",
+    "subtitle": "Calculated annual yield from a 200 m\u00b2 residential roof (litres/year)",
+    "fontSize": 17,
+    "fontWeight": "bold",
+    "font": "Inter, system-ui, -apple-system, sans-serif",
+    "subtitleFont": "Inter, system-ui, -apple-system, sans-serif",
+    "subtitleFontSize": 12,
+    "subtitleFontStyle": "normal",
+    "subtitleColor": "#64748b",
+    "subtitlePadding": 6,
+    "anchor": "start",
+    "color": "#0f172a",
+    "offset": 16
+  },
+
+  "width": "container",
+  "height": 360,
+  "autosize": { "type": "fit", "contains": "padding" },
+
+  "data": {
+    "url": "data/total_consumption_rainfall.csv",
+    "format": { "type": "csv" }
+  },
+
+  "transform": [
+    { "calculate": "datum.Rainfall_mm * 200 * 0.85", "as": "Calculated_Yield_Liters" }
+  ],
+
+  "layer": [
+    {
+      "description": "Soft area fill underneath the line to make the magnitude feel tangible.",
+      "mark": { "type": "area", "color": "#0284c7", "opacity": 0.1, "interpolate": "monotone", "line": false },
+      "encoding": {
+        "x": { "field": "Year", "type": "ordinal", "sort": null },
+        "y": { "field": "Calculated_Yield_Liters", "type": "quantitative", "scale": { "zero": true } }
+      }
+    },
+    {
+      "description": "Main yield trend line + points.",
+      "mark": {
+        "type": "line",
+        "color": "#0284c7",
+        "strokeWidth": 3,
+        "interpolate": "monotone",
+        "strokeCap": "round",
+        "point": { "filled": true, "size": 65, "color": "#0284c7", "stroke": "#ffffff", "strokeWidth": 1.5 }
+      },
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "ordinal",
+          "sort": null,
+          "axis": {
+            "title": "Financial Year",
+            "titleFontSize": 11,
+            "titleColor": "#475569",
+            "titlePadding": 12,
+            "labelFontSize": 11,
+            "labelColor": "#475569",
+            "labelAngle": -30,
+            "grid": false,
+            "domainColor": "#e2e8f0",
+            "tickColor": "#e2e8f0"
+          }
+        },
+        "y": {
+          "field": "Calculated_Yield_Liters",
+          "type": "quantitative",
+          "scale": { "zero": true, "nice": true },
+          "axis": {
+            "title": "Potential yield (litres/year)",
+            "titleFontSize": 11,
+            "titleColor": "#475569",
+            "labelFontSize": 11,
+            "labelColor": "#475569",
+            "format": ",.0f",
+            "gridColor": "#e2e8f0",
+            "gridDash": [3, 3]
+          }
+        },
+        "tooltip": [
+          { "field": "Year",                    "type": "ordinal",      "title": "Year"                                  },
+          { "field": "Rainfall_mm",             "type": "quantitative", "title": "Rainfall (mm)",        "format": ",.0f" },
+          { "field": "Calculated_Yield_Liters", "type": "quantitative", "title": "Potential yield (L)",  "format": ","   }
+        ]
+      }
+    },
+    {
+      "description": "Static reference: typical 3-person household indoor demand (~150 kL = 150 000 L) shown as a dashed rule.",
+      "data": { "values": [{ "ref": 150000, "label": "Typical household indoor use: ~150,000 L/yr" }] },
+      "layer": [
+        {
+          "mark": { "type": "rule", "color": "#ef4444", "strokeDash": [6, 4], "strokeWidth": 1.2 },
+          "encoding": { "y": { "field": "ref", "type": "quantitative" } }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "baseline": "bottom",
+            "dx": 0,
+            "dy": -4,
+            "fontSize": 10,
+            "fontStyle": "italic",
+            "color": "#ef4444",
+            "font": "Inter, system-ui, sans-serif"
+          },
+          "encoding": {
+            "x":    { "datum": "2023-24", "type": "ordinal" },
+            "y":    { "field": "ref",     "type": "quantitative" },
+            "text": { "field": "label",   "type": "nominal" }
+          }
+        }
+      ]
+    }
+  ],
+
+  "config": {
+    "background": "#ffffff",
+    "font": "Inter, system-ui, -apple-system, sans-serif",
+    "view": { "stroke": "transparent" },
+    "tooltip": { "theme": "light" }
+  }
+}
